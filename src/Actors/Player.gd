@@ -2,6 +2,11 @@ extends Actor
 
 export var stomp_impulse: = 1000.00
 
+onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+func _ready() -> void:
+	animation_player.play("Idle_E")
+
 func _on_EnemyDetector_area_entered(area: Area2D) -> void:
 	_velocity = calculate_stomp_velocity(_velocity, stomp_impulse)
 	
@@ -14,6 +19,15 @@ func _physics_process(delta: float) -> void:
 	var direction: = get_direction()	
 	_velocity = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
 	_velocity = move_and_slide(_velocity, FLOOR_NORMAL)
+	
+	#Player Animation
+	if direction.x < 0:
+		animation_player.play("Walk_W")
+	elif direction.x > 0:
+		animation_player.play("Walk_E")
+		
+	if direction == Vector2.ZERO:
+		animation_player.play("Idle_E")
 	
 func get_direction() -> Vector2:
 	return Vector2(
