@@ -1,10 +1,35 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://assets/DinoSprites.png" type="Texture" id=1]
+[ext_resource path="res://DinoSprites.png" type="Texture" id=1]
 [ext_resource path="res://src/Actors/Player.gd" type="Script" id=2]
 
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 24, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 48, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 72, 0, 24, 24 )
+
 [sub_resource type="SpriteFrames" id=1]
-animations = [  ]
+animations = [ {
+"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+} ]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 26.1922, 34.9092 )
@@ -12,37 +37,7 @@ extents = Vector2( 26.1922, 34.9092 )
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 24.6068, 29.6147 )
 
-[sub_resource type="AnimationNodeAnimation" id=4]
-animation = "Idle_W"
-
-[sub_resource type="AnimationNodeAnimation" id=5]
-animation = "Idle_E"
-
-[sub_resource type="AnimationNodeAnimation" id=16]
-animation = "Idle_N"
-
-[sub_resource type="AnimationNodeAnimation" id=17]
-animation = "Idle_N"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id=6]
-blend_point_0/node = SubResource( 4 )
-blend_point_0/pos = Vector2( -1, 0 )
-blend_point_1/node = SubResource( 5 )
-blend_point_1/pos = Vector2( 1, 0 )
-blend_point_2/node = SubResource( 16 )
-blend_point_2/pos = Vector2( 0, 1 )
-blend_point_3/node = SubResource( 17 )
-blend_point_3/pos = Vector2( 0, -1 )
-blend_mode = 1
-
-[sub_resource type="AnimationNodeStateMachine" id=7]
-states/Idle/node = SubResource( 6 )
-states/Idle/position = Vector2( 609, 114 )
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=8]
-
-[sub_resource type="Animation" id=9]
-resource_name = "Idle_E"
+[sub_resource type="Animation" id=4]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -70,8 +65,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=15]
-resource_name = "Idle_N"
+[sub_resource type="Animation" id=5]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -87,8 +81,7 @@ tracks/0/keys = {
 "values": [ 24, 25, 27, 27 ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "Idle_W"
+[sub_resource type="Animation" id=6]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -116,8 +109,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="Animation" id=11]
-resource_name = "Jump_E"
+[sub_resource type="Animation" id=7]
 length = 0.3
 loop = true
 tracks/0/type = "value"
@@ -145,8 +137,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=12]
-resource_name = "Jump_W"
+[sub_resource type="Animation" id=8]
 length = 0.3
 loop = true
 tracks/0/type = "value"
@@ -174,8 +165,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=13]
-resource_name = "Walk_E"
+[sub_resource type="Animation" id=9]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -203,8 +193,23 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=14]
-resource_name = "Walk_W"
+[sub_resource type="Animation" id=10]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 28, 29, 30, 31 ]
+}
+
+[sub_resource type="Animation" id=11]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -239,20 +244,20 @@ script = ExtResource( 2 )
 stomp_impulse = 1600.0
 
 [node name="player" type="AnimatedSprite" parent="."]
-visible = false
 position = Vector2( -0.166862, -34.9853 )
 scale = Vector2( 3.7, 3.7 )
 frames = SubResource( 1 )
+animation = "Idle"
+frame = 2
 playing = true
-flip_h = true
 
 [node name="Sprite" type="Sprite" parent="."]
+visible = false
 position = Vector2( 0, -32.5417 )
 scale = Vector2( 3.7, 3.7 )
 texture = ExtResource( 1 )
-flip_h = true
-hframes = 28
-frame = 27
+hframes = 32
+frame = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -285,20 +290,14 @@ modulate = Color( 0.0705882, 0.0823529, 0.403922, 1 )
 position = Vector2( -0.353577, -34.8076 )
 shape = SubResource( 3 )
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 7 )
-anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/playback = SubResource( 8 )
-parameters/Idle/blend_position = Vector2( 0, 0 )
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Idle_E = SubResource( 9 )
-anims/Idle_N = SubResource( 15 )
-anims/Idle_W = SubResource( 10 )
-anims/Jump_E = SubResource( 11 )
-anims/Jump_W = SubResource( 12 )
-anims/Walk_E = SubResource( 13 )
-anims/Walk_W = SubResource( 14 )
+anims/Idle_E = SubResource( 4 )
+anims/Idle_N = SubResource( 5 )
+anims/Idle_W = SubResource( 6 )
+anims/Jump_E = SubResource( 7 )
+anims/Jump_W = SubResource( 8 )
+anims/Walk_E = SubResource( 9 )
+anims/Walk_N = SubResource( 10 )
+anims/Walk_W = SubResource( 11 )
 [connection signal="area_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_area_entered"]
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_body_entered"]

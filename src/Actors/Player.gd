@@ -21,13 +21,21 @@ func _physics_process(delta: float) -> void:
 	_velocity = move_and_slide(_velocity, FLOOR_NORMAL)
 	
 	#Player Animation
+	print("Direction")
+	print(direction)
+#	if direction != Vector2.ZERO:
+	
 	if direction.x < 0:
 		animation_player.play("Walk_W")
 	elif direction.x > 0:
 		animation_player.play("Walk_E")
-		
-	if direction == Vector2.ZERO:
+	else: 
 		animation_player.play("Idle_E")
+	
+	if not is_on_floor():
+		animation_player.play("Jump_E")
+		
+	
 	
 func get_direction() -> Vector2:
 	return Vector2(
