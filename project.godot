@@ -20,7 +20,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="2D Plataform"
+config/name="2D Platform"
 run/main_scene="res://src/Screens/MainScreen.tscn"
 config/icon="res://icon.png"
 
