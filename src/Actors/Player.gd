@@ -2,10 +2,11 @@ extends Actor
 
 export var stomp_impulse: = 1000.00
 
-onready var animation_player: AnimationPlayer = $AnimationPlayer
+#onready var animation_player: AnimationPlayer = $AnimationPlayer
+onready var animation_player: AnimatedSprite = $player
 
 func _ready() -> void:
-	animation_player.play("Idle_E")
+	animation_player.play("Idle")
 
 func _on_EnemyDetector_area_entered(area: Area2D) -> void:
 	_velocity = calculate_stomp_velocity(_velocity, stomp_impulse)
@@ -26,14 +27,17 @@ func _physics_process(delta: float) -> void:
 #	if direction != Vector2.ZERO:
 	
 	if direction.x < 0:
-		animation_player.play("Walk_W")
+		animation_player.play("Walk")
+		animation_player.flip_h = true
 	elif direction.x > 0:
-		animation_player.play("Walk_E")
+		animation_player.play("Walk")
+		animation_player.flip_h = false
 	else: 
-		animation_player.play("Idle_E")
+		if is_on_floor():
+			animation_player.play("Idle")
 	
 	if not is_on_floor():
-		animation_player.play("Jump_E")
+		animation_player.play("Jump")
 		
 	
 	
